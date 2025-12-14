@@ -1,6 +1,6 @@
 let db;
 
-const request = indexedDB.open("accountsDiaryDB", 1);
+const request = indexedDB.open("AccountsDiaryDB", 1);
 
 request.onupgradeneeded = e => {
   db = e.target.result;
@@ -17,13 +17,8 @@ function saveEntry(entry) {
   tx.objectStore("entries").put(entry);
 }
 
-function deleteEntry(id) {
-  const tx = db.transaction("entries", "readwrite");
-  tx.objectStore("entries").delete(id);
-}
-
-function getAllEntries(callback) {
+function getAllEntries(cb) {
   const tx = db.transaction("entries", "readonly");
   const req = tx.objectStore("entries").getAll();
-  req.onsuccess = () => callback(req.result);
+  req.onsuccess = () => cb(req.result);
 }
