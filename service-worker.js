@@ -1,20 +1,19 @@
 self.addEventListener("install", e => {
   e.waitUntil(
-    caches.open("diary-cache").then(cache => {
-      return cache.addAll([
+    caches.open("diary-cache").then(c =>
+      c.addAll([
         "./",
         "./index.html",
         "./style.css",
         "./app.js",
-        "./db.js",
-        "./csv.js"
-      ]);
-    })
+        "./db.js"
+      ])
+    )
   );
 });
 
 self.addEventListener("fetch", e => {
   e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
+    caches.match(e.request).then(r => r || fetch(e.request))
   );
 });
