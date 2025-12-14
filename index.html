@@ -1,78 +1,61 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Accounts Diary</title>
-    <link rel="manifest" href="manifest.json">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="theme-color" content="#4f46e5">
-    <style>
-        body { font-family: Arial; padding: 20px; }
-        .card { background: #f0f0f0; padding: 20px; border-radius: 10px; margin: 10px; }
-        button { background: #4f46e5; color: white; padding: 15px; border: none; border-radius: 8px; width: 100%; }
-        input, select { width: 100%; padding: 12px; margin: 5px 0; border: 1px solid #ccc; border-radius: 8px; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Accounts Diary</title>
+  <link rel="manifest" href="manifest.json" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div class="card">
-        <h2>📒 Accounts Diary</h2>
-        
-        <input type="text" id="date" placeholder="DD-MM-YYYY">
-        <input type="text" id="desc" placeholder="Description">
-        <input type="number" id="amount" placeholder="Amount">
-        
-        <button onclick="addEntry()">➕ Add Entry</button>
-        <button onclick="saveEntries()">💾 Save All</button>
-        
-        <div id="entries"></div>
-    </div>
-    
-    <script>
-        let entries = [];
-        
-        function addEntry() {
-            const entry = {
-                date: document.getElementById('date').value,
-                desc: document.getElementById('desc').value,
-                amount: document.getElementById('amount').value
-            };
-            entries.push(entry);
-            displayEntries();
-            // Clear inputs
-            document.getElementById('desc').value = '';
-            document.getElementById('amount').value = '';
-        }
-        
-        function displayEntries() {
-            const container = document.getElementById('entries');
-            container.innerHTML = entries.map(e => 
-                `<div>${e.date} - ${e.desc} - ₹${e.amount}</div>`
-            ).join('');
-        }
-        
-        function saveEntries() {
-            localStorage.setItem('accounts', JSON.stringify(entries));
-            alert('Saved! Works offline.');
-        }
-        
-        // Load saved entries
-        const saved = localStorage.getItem('accounts');
-        if (saved) entries = JSON.parse(saved);
-        displayEntries();
-        
-        // Set today's date
-        const today = new Date();
-        const dd = String(today.getDate()).padStart(2, '0');
-        const mm = String(today.getMonth() + 1).padStart(2, '0');
-        const yyyy = today.getFullYear();
-        document.getElementById('date').value = `${dd}-${mm}-${yyyy}`;
-        
-        // PWA Installation
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            // Show install button
-        });
-    </script>
+
+<header>
+  <h2>Accounts Diary</h2>
+</header>
+
+<section class="heads">
+  <select id="mainHead">
+    <option value="">Select Main Head</option>
+    <option>Personal</option>
+    <option>Business</option>
+    <option>Loan</option>
+  </select>
+
+  <select id="subHead">
+    <option value="">Select Sub Head</option>
+    <option>Bank 1</option>
+    <option>Bank 2</option>
+    <option>Purse</option>
+  </select>
+</section>
+
+<section class="entry-form">
+  <input type="text" id="date" placeholder="DD-MM-YYYY" />
+  <input type="text" id="description" placeholder="Description" />
+  <input type="number" id="amount" placeholder="Amount (+ / -)" />
+  <button onclick="addTempEntry()">Add</button>
+</section>
+
+<section>
+  <h3>Temporary Entries</h3>
+  <ul id="tempList"></ul>
+  <button class="save-btn" onclick="saveAll()">Save</button>
+</section>
+
+<section>
+  <h3>Saved Entries</h3>
+  <ul id="savedList"></ul>
+</section>
+
+<script src="db.js"></script>
+<script src="csv.js"></script>
+<script src="app.js"></script>
+
+<script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('service-worker.js');
+  }
+</script>
+
 </body>
 </html>
