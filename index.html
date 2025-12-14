@@ -1,60 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Accounts Diary</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="style.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Accounts Diary</title>
+
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
-<header>
-  <h2>Accounts Diary</h2>
-</header>
+<h2>Accounts Diary</h2>
 
-<section class="heads">
-  <select id="mainHead">
-    <option value="">Select Main Head</option>
-    <option>Personal</option>
-    <option>Business</option>
-    <option>Loan</option>
-  </select>
+<!-- HEAD MANAGEMENT -->
+<section class="box">
+  <h3>Manage Heads</h3>
 
-  <select id="subHead">
-    <option value="">Select Sub Head</option>
-    <option>Bank 1</option>
-    <option>Bank 2</option>
-    <option>Purse</option>
-  </select>
+  <input id="newMainHead" placeholder="Add Main Head">
+  <button onclick="addMainHead()">Add Main Head</button>
+
+  <input id="newSubHead" placeholder="Add Sub Head">
+  <button onclick="addSubHead()">Add Sub Head</button>
 </section>
 
-<section class="entry-form">
-  <input type="text" id="date" placeholder="DD-MM-YYYY" />
-  <input type="text" id="description" placeholder="Description" />
-  <input type="number" id="amount" placeholder="Amount (+ / -)" />
-  <button onclick="addTempEntry()">Add</button>
+<!-- HEAD SELECTION -->
+<section class="box">
+  <select id="mainHead"></select>
+  <select id="subHead"></select>
 </section>
 
-<section>
+<!-- ENTRY FORM -->
+<section class="box">
+  <input type="date" id="date">
+  <input type="text" id="description" placeholder="Description">
+
+  <input
+    type="text"
+    id="amount"
+    inputmode="decimal"
+    placeholder="+ or - Amount"
+  >
+
+  <button onclick="addTempEntry()">Add Entry</button>
+</section>
+
+<!-- TEMP ENTRIES -->
+<section class="box">
   <h3>Temporary Entries</h3>
   <ul id="tempList"></ul>
-  <button class="save-btn" onclick="saveAll()">Save</button>
+  <button class="save" onclick="saveAll()">Save All</button>
 </section>
 
-<section>
+<!-- SAVED ENTRIES -->
+<section class="box">
   <h3>Saved Entries</h3>
   <ul id="savedList"></ul>
 </section>
 
 <script src="db.js"></script>
-<script src="csv.js"></script>
 <script src="app.js"></script>
 
 <script>
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('service-worker.js');
-  }
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('service-worker.js');
+}
 </script>
 
 </body>
