@@ -1,1 +1,51 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 10px;
+  background: #f4f4f4;
+}
 
+header {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+select, input, button {
+  width: 100%;
+  padding: 8px;
+  margin: 5px 0;
+}
+
+.entry-form, .heads {
+  background: #fff;
+  padding: 10px;
+  border-radius: 5px;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+}
+
+li {
+  background: #fff;
+  padding: 8px;
+  margin: 5px 0;
+  border-left: 5px solid gray;
+}
+
+.income {
+  border-left-color: green;
+  color: green;
+}
+
+.expense {
+  border-left-color: red;
+  color: red;
+}
+
+.save-btn {
+  background: green;
+  color: white;
+  font-size: 16px;
+}
