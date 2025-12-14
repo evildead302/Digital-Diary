@@ -1,71 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Accounts Diary</title>
-
-<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="style.css">
+<link rel="manifest" href="manifest.json">
 </head>
 
 <body>
 
-<h2>Accounts Diary</h2>
+<nav>
+  <button onclick="showPage('home')">Home</button>
+  <button onclick="showPage('settings')">Settings</button>
+</nav>
 
-<!-- HEAD MANAGEMENT -->
-<section class="box">
+<!-- HOME -->
+<section id="home" class="page">
+  <h2>Total Balance</h2>
+  <h1 id="totalBalance">0</h1>
+
+  <button onclick="showPage('entry')">➕ Add Entry</button>
+  <button onclick="showPage('balance')">📊 Balance Detail</button>
+  <button onclick="exportCSV()">📤 Export</button>
+  <input type="file" onchange="importCSV(event)">
+</section>
+
+<!-- SETTINGS -->
+<section id="settings" class="page">
   <h3>Manage Heads</h3>
 
-  <input id="newMainHead" placeholder="Add Main Head">
-  <button onclick="addMainHead()">Add Main Head</button>
+  <input id="mainHeadInput" placeholder="Main Head">
+  <button onclick="addMainHead()">Add Main</button>
 
-  <input id="newSubHead" placeholder="Add Sub Head">
-  <button onclick="addSubHead()">Add Sub Head</button>
+  <select id="mainHeadForSub"></select>
+  <input id="subHeadInput" placeholder="Sub Head">
+  <button onclick="addSubHead()">Add Sub</button>
+
+  <ul id="headList"></ul>
 </section>
 
-<!-- HEAD SELECTION -->
-<section class="box">
-  <select id="mainHead"></select>
-  <select id="subHead"></select>
-</section>
+<!-- ENTRY PAGE -->
+<section id="entry" class="page">
+  <select id="entryMain"></select>
+  <select id="entrySub"></select>
 
-<!-- ENTRY FORM -->
-<section class="box">
   <input type="date" id="date">
-  <input type="text" id="description" placeholder="Description">
+  <input id="desc" placeholder="Description">
+  <input id="amount" inputmode="decimal" placeholder="+ / - Amount">
 
-  <input
-    type="text"
-    id="amount"
-    inputmode="decimal"
-    placeholder="+ or - Amount"
-  >
+  <button onclick="addTemp()">Add</button>
+  <button onclick="saveAll()">Save</button>
 
-  <button onclick="addTempEntry()">Add Entry</button>
-</section>
-
-<!-- TEMP ENTRIES -->
-<section class="box">
-  <h3>Temporary Entries</h3>
   <ul id="tempList"></ul>
-  <button class="save" onclick="saveAll()">Save All</button>
 </section>
 
-<!-- SAVED ENTRIES -->
-<section class="box">
-  <h3>Saved Entries</h3>
-  <ul id="savedList"></ul>
+<!-- BALANCE DETAIL -->
+<section id="balance" class="page">
+  <h3>Balance Detail</h3>
+  <ul id="balanceList"></ul>
 </section>
 
 <script src="db.js"></script>
+<script src="csv.js"></script>
 <script src="app.js"></script>
-
-<script>
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
-}
-</script>
-
 </body>
 </html>
