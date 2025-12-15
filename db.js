@@ -1,24 +1,26 @@
 let db;
 
-const request = indexedDB.open("AccountsDiaryDB", 1);
+const req = indexedDB.open("AccountsDiaryDB", 1);
 
-request.onupgradeneeded = e => {
+req.onupgradeneeded = e => {
   db = e.target.result;
   db.createObjectStore("entries", { keyPath: "id" });
 };
 
-request.onsuccess = e => {
+req.onsuccess = e => {
   db = e.target.result;
-  loadSavedEntries();
+  calculateTotal();
 };
 
 function saveEntry(entry) {
-  const tx = db.transaction("entries", "readwrite");
-  tx.objectStore("entries").put(entry);
+  db.transaction("entries", "readwrite")
+    .objectStore("entries")
+    .put(entry);
 }
 
 function getAllEntries(cb) {
-  const tx = db.transaction("entries", "readonly");
-  const req = tx.objectStore("entries").getAll();
-  req.onsuccess = () => cb(req.result);
+  const r = db.transaction("entries")
+    .objectStore("entries")
+    .getAll();
+  r.onsuccess = () => cb(r.result);
 }
