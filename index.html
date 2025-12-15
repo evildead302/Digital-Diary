@@ -20,7 +20,8 @@
   <h1 id="totalBalance">0</h1>
 
   <button onclick="showPage('entry')">Add / Delete Entries</button>
-  <button onclick="showPage('balance')">View Balance Detail</button>
+  <button onclick="showPage('balance')">Balance Detail</button>
+  <button onclick="showPage('ledger')">Ledger</button>
 
   <button onclick="exportCSV()">Export CSV</button>
   <input type="file" accept=".csv" onchange="importCSV(event)">
@@ -28,14 +29,14 @@
 
 <!-- SETTINGS -->
 <section id="settings" class="page">
-  <h3>Main & Sub Head Settings</h3>
+  <h3>Heads Settings</h3>
 
-  <input id="mainHeadInput" placeholder="Add Main Head">
-  <button onclick="addMainHead()">Add Main Head</button>
+  <input id="mainHeadInput" placeholder="Main Head">
+  <button onclick="addMainHead()">Add Main</button>
 
   <select id="mainForSub"></select>
-  <input id="subHeadInput" placeholder="Add Sub Head">
-  <button onclick="addSubHead()">Add Sub Head</button>
+  <input id="subHeadInput" placeholder="Sub Head">
+  <button onclick="addSubHead()">Add Sub</button>
 
   <ul id="headList"></ul>
 </section>
@@ -49,16 +50,37 @@
   <input id="desc" placeholder="Description">
   <input id="amount" inputmode="decimal" placeholder="+ / - Amount">
 
-  <button onclick="addTemp()">Add Entry</button>
+  <button onclick="addTemp()">Add Temp</button>
   <button onclick="saveAll()">Save</button>
 
   <ul id="tempList"></ul>
+  <ul id="savedEntryList"></ul>
 </section>
 
 <!-- BALANCE DETAIL -->
 <section id="balance" class="page">
   <h3>Balance Detail</h3>
   <ul id="balanceList"></ul>
+</section>
+
+<!-- LEDGER -->
+<section id="ledger" class="page">
+  <h3>Ledger</h3>
+
+  <select id="ledgerMain"></select>
+  <select id="ledgerSub"></select>
+
+  <input type="date" id="fromDate">
+  <input type="date" id="toDate">
+
+  <select id="typeFilter">
+    <option value="all">All</option>
+    <option value="income">Income</option>
+    <option value="expense">Expense</option>
+  </select>
+
+  <button onclick="loadLedger()">Apply Filter</button>
+  <ul id="ledgerList"></ul>
 </section>
 
 <script src="db.js"></script>
