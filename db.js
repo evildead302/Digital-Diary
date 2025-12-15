@@ -271,4 +271,4 @@ function clearAllEntries() {
             reject(request.error);
         };
     });
-}
+            }
