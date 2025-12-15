@@ -1,0 +1,19 @@
+<!-- In index.html, update the Neon section -->
+<div class="neon-config">
+    <h4>2️⃣ Neon PostgreSQL Cloud Sync</h4>
+    
+    <div class="config-group">
+        <label>Connection String:</label>
+        <input type="password" id="neonConnection" placeholder="postgresql://user:pass@host/db" style="width: 100%; margin: 5px 0;">
+        <small style="color: #666;">Format: postgresql://username:password@host/database</small>
+    </div>
+    
+    <div class="config-group">
+        <label>Test Connection:</label>
+        <button onclick="testNeonConnection()" class="secondary">Test</button>
+        <span id="testResult" style="margin-left: 10px;"></span>
+    </div>
+    
+    <button onclick="saveNeonConfig()" class="primary">Save Neon Configuration</button>
+    <button onclick="clearNeonConfig()" class="danger">Clear</button>
+</div>
