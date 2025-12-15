@@ -10,8 +10,7 @@ const STATIC_FILES = [
     './app.js',
     './db.js',
     './csv.js',
-    './manifest.json',
-    'https://fonts.googleapis.com/css2?family=Segoe+UI:wght@300;400;500;600&display=swap'
+    './manifest.json'
 ];
 
 // Install event - cache static files
@@ -61,30 +60,6 @@ self.addEventListener('fetch', event => {
     // Skip chrome-extension requests
     if (event.request.url.startsWith('chrome-extension://')) return;
     
-    // For API calls, use network-first strategy
-    if (event.request.url.includes('/api/') || event.request.url.includes('neon.tech')) {
-        event.respondWith(
-            fetch(event.request)
-                .then(response => {
-                    // Cache successful API responses
-                    if (response.ok) {
-                        const responseClone = response.clone();
-                        caches.open(DYNAMIC_CACHE)
-                            .then(cache => {
-                                cache.put(event.request, responseClone);
-                            });
-                    }
-                    return response;
-                })
-                .catch(() => {
-                    // If network fails, try cache
-                    return caches.match(event.request);
-                })
-        );
-        return;
-    }
-    
-    // For static files, use cache-first strategy
     event.respondWith(
         caches.match(event.request)
             .then(cachedResponse => {
@@ -120,11 +95,6 @@ self.addEventListener('fetch', event => {
                             return caches.match('./index.html');
                         }
                         
-                        // For CSS/JS, return from static cache
-                        if (event.request.url.includes('.css') || event.request.url.includes('.js')) {
-                            return caches.match(event.request.url);
-                        }
-                        
                         return new Response('Offline - No connection available', {
                             status: 503,
                             statusText: 'Service Unavailable',
@@ -137,7 +107,7 @@ self.addEventListener('fetch', event => {
     );
 });
 
-// Sync event for background sync (if supported)
+// Sync event for background sync
 self.addEventListener('sync', event => {
     if (event.tag === 'sync-entries') {
         console.log('Background sync triggered');
@@ -147,44 +117,8 @@ self.addEventListener('sync', event => {
 
 // Background sync function
 async function syncEntries() {
-    try {
-        // Get unsynced entries from IndexedDB
-        const unsyncedEntries = await getUnsyncedEntriesFromDB();
-        
-        if (unsyncedEntries.length === 0) {
-            console.log('No entries to sync');
-            return;
-        }
-        
-        console.log('Syncing', unsyncedEntries.length, 'entries');
-        
-        // Here you would implement actual sync logic
-        // For now, just mark as synced
-        await markEntriesAsSynced(unsyncedEntries);
-        
-        // Send notification
-        self.registration.showNotification('Accounts Diary', {
-            body: `Successfully synced ${unsyncedEntries.length} entries`,
-            icon: './icon-192.png',
-            badge: './icon-72.png'
-        });
-        
-    } catch (error) {
-        console.error('Sync failed:', error);
-    }
-}
-
-// Helper function to get unsynced entries (simplified)
-async function getUnsyncedEntriesFromDB() {
-    // This would need access to IndexedDB
-    // For now, return empty array
-    return [];
-}
-
-// Helper function to mark entries as synced (simplified)
-async function markEntriesAsSynced(entries) {
-    // This would update IndexedDB
-    console.log('Marking entries as synced:', entries.length);
+    console.log('Background sync started');
+    // Implement your sync logic here
 }
 
 // Push notification event
