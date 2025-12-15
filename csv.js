@@ -257,4 +257,4 @@ function importCategoriesCSV(event) {
     };
     
     reader.readAsText(file);
-                              }
+    }
