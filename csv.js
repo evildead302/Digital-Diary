@@ -10,3 +10,22 @@ function exportCSV(){
     a.click();
   });
 }
+
+function importCSV(e){
+  const f=e.target.files[0];
+  if(!f)return;
+  const r=new FileReader();
+  r.onload=()=>{
+    r.result.split("\n").slice(1).forEach((row,i)=>{
+      const [id,main,sub,date,desc,amount]=row.split(",");
+      if(main)saveEntry({
+        id:genID(i),
+        main,sub,date,desc,
+        amount:parseFloat(amount),
+        synced:false
+      });
+    });
+    calcTotal();
+  };
+  r.readAsText(f);
+}
