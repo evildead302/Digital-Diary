@@ -90,6 +90,28 @@ function getAllEntries(callback) {
     };
 }
 
+// Get entry by ID (required for app.js)
+function getEntryById(id) {
+    return new Promise((resolve, reject) => {
+        if (!db) {
+            reject(new Error("Database not initialized"));
+            return;
+        }
+        
+        const transaction = db.transaction(["entries"], "readonly");
+        const store = transaction.objectStore("entries");
+        const request = store.get(id);
+        
+        request.onsuccess = () => {
+            resolve(request.result);
+        };
+        
+        request.onerror = () => {
+            reject(request.error);
+        };
+    });
+}
+
 // Get entries with filters
 function getEntriesWithFilters(filters = {}) {
     return new Promise((resolve, reject) => {
@@ -134,28 +156,6 @@ function getEntriesWithFilters(filters = {}) {
             
             resolve(filtered);
         });
-    });
-}
-
-// Get entry by ID
-function getEntryById(id) {
-    return new Promise((resolve, reject) => {
-        if (!db) {
-            reject(new Error("Database not initialized"));
-            return;
-        }
-        
-        const transaction = db.transaction(["entries"], "readonly");
-        const store = transaction.objectStore("entries");
-        const request = store.get(id);
-        
-        request.onsuccess = () => {
-            resolve(request.result);
-        };
-        
-        request.onerror = () => {
-            reject(request.error);
-        };
     });
 }
 
