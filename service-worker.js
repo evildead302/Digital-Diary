@@ -6,7 +6,8 @@ self.addEventListener("install", e => {
         "./index.html",
         "./style.css",
         "./app.js",
-        "./db.js"
+        "./db.js",
+        "./csv.js"
       ])
     )
   );
