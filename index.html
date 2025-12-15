@@ -19,18 +19,19 @@
   <h3>Total Balance</h3>
   <h1 id="totalBalance">0</h1>
 
+  <p id="neonStatus">Neon: Not Configured</p>
+
   <button onclick="showPage('entry')">Add / Delete Entries</button>
   <button onclick="showPage('balance')">Balance Detail</button>
   <button onclick="showPage('ledger')">Ledger</button>
-
-  <button onclick="exportCSV()">Export CSV</button>
-  <input type="file" accept=".csv" onchange="importCSV(event)">
+  <button onclick="showPage('backup')">Backup / Restore</button>
 </section>
 
 <!-- SETTINGS -->
 <section id="settings" class="page">
-  <h3>Heads Settings</h3>
+  <h3>Settings</h3>
 
+  <h4>1️⃣ Heads Management</h4>
   <input id="mainHeadInput" placeholder="Main Head">
   <button onclick="addMainHead()">Add Main</button>
 
@@ -39,6 +40,11 @@
   <button onclick="addSubHead()">Add Sub</button>
 
   <ul id="headList"></ul>
+
+  <h4>2️⃣ Neon Credentials</h4>
+  <input id="neonUrl" placeholder="Neon Data API URL">
+  <input id="neonKey" placeholder="Neon API Key">
+  <button onclick="saveNeon()">Save Neon Settings</button>
 </section>
 
 <!-- ENTRY -->
@@ -57,7 +63,7 @@
   <ul id="savedEntryList"></ul>
 </section>
 
-<!-- BALANCE DETAIL -->
+<!-- BALANCE -->
 <section id="balance" class="page">
   <h3>Balance Detail</h3>
   <ul id="balanceList"></ul>
@@ -81,6 +87,15 @@
 
   <button onclick="loadLedger()">Apply Filter</button>
   <ul id="ledgerList"></ul>
+</section>
+
+<!-- BACKUP -->
+<section id="backup" class="page">
+  <h3>Backup / Restore</h3>
+  <button onclick="exportCSV()">Export CSV</button>
+  <input type="file" accept=".csv" onchange="importCSV(event)">
+  <button onclick="uploadNeon()">Upload to Neon</button>
+  <button onclick="restoreFromNeon()">Restore from Neon</button>
 </section>
 
 <script src="db.js"></script>
