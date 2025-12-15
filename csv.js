@@ -7,10 +7,11 @@ function exportCSV() {
         }
         
         // Create CSV header
-        let csv = "ID,Date,Description,Main Category,Sub Category,Amount,Synced\n";
+        let csv = "ID,Date,Description,Main Category,Sub Category,Amount,Sync Status\n";
         
         // Add each entry as a row
         d.forEach(e => {
+            const syncStatus = e.syncRemarks || (e.synced ? "synced" : "pending");
             const row = [
                 e.id,
                 `"${e.date}"`,
@@ -18,7 +19,7 @@ function exportCSV() {
                 `"${e.main.replace(/"/g, '""')}"`,
                 `"${e.sub.replace(/"/g, '""')}"`,
                 e.amount,
-                e.synced ? "Yes" : "No"
+                syncStatus
             ];
             csv += row.join(",") + "\n";
         });
@@ -69,7 +70,7 @@ function importCSV(event) {
             const line = lines[i].trim();
             if (!line) continue; // Skip empty lines
             
-            // Parse CSV row (handling quoted fields)
+            // Parse CSV row
             const row = parseCSVRow(line);
             
             if (row.length >= 6) {
@@ -81,7 +82,8 @@ function importCSV(event) {
                         main: row[3].replace(/"/g, ""),
                         sub: row[4].replace(/"/g, ""),
                         amount: parseFloat(row[5]),
-                        synced: row[6] === "Yes" || row[6] === "true"
+                        synced: row[6] === "synced",
+                        syncRemarks: row[6] || "new"
                     };
                     
                     // Validate entry
@@ -145,6 +147,15 @@ function parseCSVRow(line) {
     result.push(current);
     
     return result;
+}
+
+// Helper function to generate ID (same as in app.js)
+function genID(i) {
+    const d = new Date();
+    const ymd = `${d.getFullYear()}${String(d.getMonth()+1).padStart(2, "0")}${String(d.getDate()).padStart(2, "0")}`;
+    const ss = String(d.getSeconds()).padStart(2, "0");
+    const ms = String(d.getMilliseconds()).padStart(3, "0");
+    return `${ymd}${ss}${ms}${i+1}`;
 }
 
 // Export categories to CSV
@@ -246,4 +257,4 @@ function importCategoriesCSV(event) {
     };
     
     reader.readAsText(file);
-}
+                              }
