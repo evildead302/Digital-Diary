@@ -4,52 +4,27 @@ body {
   padding: 10px;
 }
 
-h2 {
-  text-align: center;
-}
-
-.box {
-  background: white;
+.page {
+  display: none;
+  background: #fff;
   padding: 10px;
-  margin-bottom: 10px;
   border-radius: 6px;
 }
 
-input, select, button {
+nav button, button, input, select {
   width: 100%;
   padding: 8px;
-  margin-top: 6px;
+  margin: 5px 0;
 }
 
-button {
-  background: #2e7d32;
-  color: white;
-  border: none;
-  border-radius: 4px;
+nav {
+  display: flex;
+  gap: 5px;
 }
 
-button.save {
-  background: #1565c0;
+nav button {
+  width: 50%;
 }
 
-ul {
-  list-style: none;
-  padding: 0;
-}
-
-li {
-  padding: 6px;
-  margin-top: 5px;
-  background: #eee;
-  border-left: 5px solid gray;
-}
-
-.income {
-  color: green;
-  border-left-color: green;
-}
-
-.expense {
-  color: red;
-  border-left-color: red;
-}
+.income { color: green; }
+.expense { color: red; }
