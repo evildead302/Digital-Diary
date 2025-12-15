@@ -1,108 +1,109 @@
+const pages = document.querySelectorAll(".page");
+function showPage(id) {
+  pages.forEach(p => p.style.display = "none");
+  document.getElementById(id).style.display = "block";
+}
+showPage("home");
+
+let heads = JSON.parse(localStorage.getItem("heads")) || {};
 let tempEntries = [];
 
-let mainHeads = JSON.parse(localStorage.getItem("mainHeads")) || [];
-let subHeads = JSON.parse(localStorage.getItem("subHeads")) || [];
-
-const mainHead = document.getElementById("mainHead");
-const subHead = document.getElementById("subHead");
-
-renderHeads();
-
-function renderHeads() {
-  mainHead.innerHTML = "<option value=''>Select Main Head</option>";
-  subHead.innerHTML = "<option value=''>Select Sub Head</option>";
-
-  mainHeads.forEach(h => mainHead.innerHTML += `<option>${h}</option>`);
-  subHeads.forEach(h => subHead.innerHTML += `<option>${h}</option>`);
+function saveHeads() {
+  localStorage.setItem("heads", JSON.stringify(heads));
+  renderHeads();
 }
 
+function renderHeads() {
+  mainForSub.innerHTML = "";
+  entryMain.innerHTML = "";
+  headList.innerHTML = "";
+
+  for (let m in heads) {
+    mainForSub.innerHTML += `<option>${m}</option>`;
+    entryMain.innerHTML += `<option>${m}</option>`;
+    headList.innerHTML += `<li>${m} ➜ ${heads[m].join(", ")}</li>`;
+  }
+}
+renderHeads();
+
 function addMainHead() {
-  const v = newMainHead.value.trim();
-  if (!v) return;
-  mainHeads.push(v);
-  localStorage.setItem("mainHeads", JSON.stringify(mainHeads));
-  newMainHead.value = "";
-  renderHeads();
+  const m = mainHeadInput.value.trim();
+  if (!m || heads[m]) return;
+  heads[m] = [];
+  mainHeadInput.value = "";
+  saveHeads();
 }
 
 function addSubHead() {
-  const v = newSubHead.value.trim();
-  if (!v) return;
-  subHeads.push(v);
-  localStorage.setItem("subHeads", JSON.stringify(subHeads));
-  newSubHead.value = "";
-  renderHeads();
+  const m = mainForSub.value;
+  const s = subHeadInput.value.trim();
+  if (!s || heads[m].includes(s)) return;
+  heads[m].push(s);
+  subHeadInput.value = "";
+  saveHeads();
 }
 
-function formatDate(v) {
-  const d = new Date(v);
-  return `${String(d.getDate()).padStart(2,"0")}-${String(d.getMonth()+1).padStart(2,"0")}-${d.getFullYear()}`;
-}
+entryMain.onchange = () => {
+  entrySub.innerHTML = "";
+  (heads[entryMain.value] || []).forEach(s => {
+    entrySub.innerHTML += `<option>${s}</option>`;
+  });
+};
 
-function addTempEntry() {
-  if (!mainHead.value || !subHead.value) {
-    alert("Select Main & Sub Head");
-    return;
-  }
-
+function addTemp() {
+  if (!entryMain.value || !entrySub.value) return alert("Select heads");
   if (!date.value) return alert("Select date");
-
-  const amt = amount.value.trim();
-
-  if (!/^[-+]?\d+(\.\d+)?$/.test(amt)) {
-    alert("Enter valid amount with + or -");
-    return;
-  }
+  if (!/^[-+]?\d+(\.\d+)?$/.test(amount.value)) return alert("Invalid amount");
 
   tempEntries.push({
-    date: formatDate(date.value),
-    description: description.value.trim(),
-    amount: parseFloat(amt)
+    date: date.value,
+    desc: desc.value,
+    amount: parseFloat(amount.value),
+    main: entryMain.value,
+    sub: entrySub.value
   });
 
-  description.value = "";
+  tempList.innerHTML += `<li>${desc.value} | ${amount.value}</li>`;
+  desc.value = "";
   amount.value = "";
-  renderTemp();
-}
-
-function renderTemp() {
-  tempList.innerHTML = "";
-  tempEntries.forEach(e => {
-    const li = document.createElement("li");
-    li.textContent = `${e.date} | ${e.description} | ${e.amount}`;
-    tempList.appendChild(li);
-  });
-}
-
-function generateID(sec, i) {
-  return sec + (i + 1);
 }
 
 function saveAll() {
   const sec = new Date().getSeconds().toString().padStart(2, "0");
 
   tempEntries.forEach((e, i) => {
-    saveEntry({
-      id: generateID(sec, i),
-      mainHead: mainHead.value,
-      subHead: subHead.value,
-      ...e
-    });
+    e.id = sec + (i + 1);
+    saveEntry(e);
   });
 
   tempEntries = [];
-  renderTemp();
-  loadSavedEntries();
+  tempList.innerHTML = "";
+  calculateTotal();
 }
 
-function loadSavedEntries() {
-  getAllEntries(entries => {
-    savedList.innerHTML = "";
-    entries.forEach(e => {
-      const li = document.createElement("li");
-      li.className = e.amount >= 0 ? "income" : "expense";
-      li.textContent = `${e.id} | ${e.date} | ${e.description} | ${e.amount}`;
-      savedList.appendChild(li);
-    });
+function calculateTotal() {
+  getAllEntries(d => {
+    totalBalance.innerText = d.reduce((a, b) => a + b.amount, 0);
+    renderBalanceDetail(d);
   });
+}
+
+function renderBalanceDetail(data) {
+  let map = {};
+  data.forEach(e => {
+    if (!map[e.main]) map[e.main] = {};
+    map[e.main][e.sub] = (map[e.main][e.sub] || 0) + e.amount;
+  });
+
+  balanceList.innerHTML = "";
+  for (let m in map) {
+    let total = Object.values(map[m]).reduce((a, b) => a + b, 0);
+    let li = document.createElement("li");
+    li.innerHTML = `<b>${m} : ${total}</b><ul>` +
+      Object.entries(map[m]).map(
+        ([s, v]) => `<li>${s} : ${v}</li>`
+      ).join("") +
+      `</ul>`;
+    balanceList.appendChild(li);
+  }
 }
