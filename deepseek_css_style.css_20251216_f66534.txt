@@ -1,0 +1,428 @@
+/* ====================
+   FIXED TABLE STYLING - PROPER LAYOUT
+   ==================== */
+
+/* Table container for all tables */
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    margin: 1rem 0;
+    background: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+/* Fixed table for all lists */
+.fixed-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+    min-width: 600px;
+}
+
+.fixed-table th {
+    background: #4a6fa5;
+    color: white;
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 2px solid #3a5a8c;
+}
+
+.fixed-table td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Column widths for fixed table */
+.fixed-table th:nth-child(1),
+.fixed-table td:nth-child(1) { /* Date */
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+.fixed-table th:nth-child(2),
+.fixed-table td:nth-child(2) { /* Main Category */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.fixed-table th:nth-child(3),
+.fixed-table td:nth-child(3) { /* Sub Category */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+.fixed-table th:nth-child(4),
+.fixed-table td:nth-child(4) { /* Description */
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+.fixed-table th:nth-child(5),
+.fixed-table td:nth-child(5) { /* Amount */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: right;
+    font-weight: 600;
+}
+
+.fixed-table th:nth-child(6),
+.fixed-table td:nth-child(6) { /* Actions */
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
+
+/* Row styling - PROPER SHADING */
+.fixed-table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+.fixed-table tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+.fixed-table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+.fixed-table tbody tr:hover {
+    background-color: #f0f7ff;
+}
+
+.fixed-table tr.income-row {
+    border-left: 4px solid #4caf50;
+}
+
+.fixed-table tr.expense-row {
+    border-left: 4px solid #f44336;
+}
+
+/* Remove all old table styles */
+.table-row,
+.table-cell,
+.table-header,
+.table-row-item,
+.table-container-fixed {
+    display: none !important;
+}
+
+/* Fix for ledger table to match */
+#ledgerTable {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9em;
+}
+
+#ledgerTable th {
+    background: #4a6fa5;
+    color: white;
+    padding: 12px 10px;
+    text-align: left;
+    font-weight: 600;
+    font-size: 0.85em;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    border-bottom: 2px solid #3a5a8c;
+}
+
+#ledgerTable td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+    font-size: 0.9em;
+    line-height: 1.4;
+}
+
+/* Ledger column widths */
+#ledgerTable th:nth-child(1),
+#ledgerTable td:nth-child(1) { /* Date */
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+}
+
+#ledgerTable th:nth-child(2),
+#ledgerTable td:nth-child(2) { /* Description */
+    width: auto;
+    min-width: 150px;
+    max-width: 300px;
+    word-wrap: break-word;
+    white-space: normal;
+    line-height: 1.4;
+}
+
+#ledgerTable th:nth-child(3),
+#ledgerTable td:nth-child(3) { /* Main Category */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+#ledgerTable th:nth-child(4),
+#ledgerTable td:nth-child(4) { /* Sub Category */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+}
+
+#ledgerTable th:nth-child(5),
+#ledgerTable td:nth-child(5) { /* Amount */
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    text-align: right;
+    font-weight: 600;
+}
+
+#ledgerTable th:nth-child(6),
+#ledgerTable td:nth-child(6) { /* Actions */
+    width: 100px;
+    min-width: 100px;
+    max-width: 100px;
+    text-align: center;
+}
+
+/* Ledger row styling - PROPER SHADING */
+#ledgerTable tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+#ledgerTable tbody tr:nth-child(even) {
+    background-color: #f8fafc;
+}
+
+#ledgerTable tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+#ledgerTable tbody tr:hover {
+    background-color: #f0f7ff;
+}
+
+#ledgerTable tr.income-row {
+    border-left: 4px solid #4caf50;
+}
+
+#ledgerTable tr.expense-row {
+    border-left: 4px solid #f44336;
+}
+
+/* Amount colors */
+.amount-positive {
+    color: #2e7d32;
+    font-weight: 600;
+}
+
+.amount-negative {
+    color: #c62828;
+    font-weight: 600;
+}
+
+/* Small buttons */
+.small-btn {
+    padding: 6px 10px !important;
+    font-size: 0.8em !important;
+    margin: 0 3px;
+    min-width: 32px;
+    height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.edit-btn {
+    background: #ffc107 !important;
+    color: #000 !important;
+}
+
+.edit-btn:hover {
+    background: #e0a800 !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.danger-btn {
+    background: #f44336 !important;
+    color: white !important;
+}
+
+.danger-btn:hover {
+    background: #d32f2f !important;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+/* ====================
+   PAGE CONTAINER FIXES
+   ==================== */
+.page {
+    display: none;
+    max-width: 1200px;
+    margin: 1rem auto;
+    padding: 1.2rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.5s ease;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.page.active {
+    display: block;
+}
+
+/* ====================
+   LISTS CONTAINER FIX
+   ==================== */
+.lists-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.list-section {
+    background: #f8f9fa;
+    padding: 1.2rem;
+    border-radius: 8px;
+    overflow: hidden; /* Prevent content overflow */
+}
+
+.list-section h3 {
+    color: #4a6fa5;
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* ====================
+   MOBILE RESPONSIVE
+   ==================== */
+@media (max-width: 768px) {
+    .page {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+    
+    /* Lists container - stack vertically on mobile */
+    .lists-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    /* Table adjustments for mobile */
+    .table-container {
+        margin: 0.5rem -0.5rem;
+        width: calc(100% + 1rem);
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        max-height: 400px;
+    }
+    
+    .fixed-table,
+    #ledgerTable {
+        min-width: 600px;
+        font-size: 0.85em;
+    }
+    
+    .fixed-table th,
+    .fixed-table td,
+    #ledgerTable th,
+    #ledgerTable td {
+        padding: 10px 8px;
+        font-size: 0.85em;
+    }
+    
+    .small-btn {
+        padding: 5px 8px !important;
+        font-size: 0.75em !important;
+        margin: 0 2px;
+        min-width: 28px;
+        height: 24px;
+    }
+    
+    /* Reduce column widths on mobile */
+    .fixed-table th:nth-child(1),
+    .fixed-table td:nth-child(1),
+    #ledgerTable th:nth-child(1),
+    #ledgerTable td:nth-child(1) {
+        width: 80px;
+        min-width: 80px;
+        max-width: 80px;
+    }
+    
+    .fixed-table th:nth-child(2),
+    .fixed-table td:nth-child(2),
+    #ledgerTable th:nth-child(3),
+    #ledgerTable td:nth-child(3) {
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+    }
+    
+    .fixed-table th:nth-child(3),
+    .fixed-table td:nth-child(3),
+    #ledgerTable th:nth-child(4),
+    #ledgerTable td:nth-child(4) {
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .page {
+        padding: 0.8rem;
+    }
+    
+    .table-container {
+        max-height: 350px;
+    }
+    
+    .fixed-table,
+    #ledgerTable {
+        min-width: 550px;
+        font-size: 0.8em;
+    }
+    
+    .fixed-table th,
+    .fixed-table td,
+    #ledgerTable th,
+    #ledgerTable td {
+        padding: 8px 6px;
+        font-size: 0.8em;
+    }
+    
+    .small-btn {
+        padding: 4px 6px !important;
+        font-size: 0.7em !important;
+        min-width: 24px;
+        height: 22px;
+    }
+}
